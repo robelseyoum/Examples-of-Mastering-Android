@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.fragment.app.FragmentActivity
 import kotlinx.android.synthetic.main.activity_header.*
 
-abstract class BaseActivity : FragmentActivity(){
+abstract class BaseActivity : FragmentActivity() {
 
     protected abstract val tag : String
     protected abstract fun getLayout(): Int

@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Journaler</string>
+    <string name="title">Title</string>
+    <string name="your_note_content_goes_here">Your note content goes here.</string>
+    <string name="pick_a_date">PICK A DATE</string>
+    <string name="pick_time">PICK TIME</string>
+    <string name="lorem_ipsum_sit_dolore">Lorem ipsum</string>
 </resources>
