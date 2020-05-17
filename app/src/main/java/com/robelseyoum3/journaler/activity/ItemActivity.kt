@@ -1,5 +1,6 @@
 package com.robelseyoum3.journaler.activity
 
+import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import com.robelseyoum3.journaler.R
@@ -10,12 +11,21 @@ abstract class ItemActivity : BaseActivity() {
     override fun getLayout() = R.layout.activity_main
     override fun getActivityTitle() = R.string.app_name
     protected var mode = MODE.VIEW
+    protected var success = Activity.RESULT_CANCELED
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val modeTest = intent.getIntExtra(MODE.EXTRAS_KEY, MODE.VIEW.mode)
-        mode = MODE.getByValue(modeTest)
+        val data = intent.extras
+        data?.let {
+            val modeTest = it.getInt(MODE.EXTRAS_KEY, MODE.VIEW.mode)
+            mode = MODE.getByValue(modeTest)
+        }
         Log.v(tag, "MODE [ $mode ")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        setResult(success)
     }
 }
