@@ -1,5 +1,6 @@
 package com.robelseyoum3.journaler.activity
 
+import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.graphics.Typeface
@@ -12,11 +13,11 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.EditText
-import androidx.appcompat.app.AppCompatActivity
 import com.robelseyoum3.journaler.R
+import com.robelseyoum3.journaler.permission.PermissionCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity : PermissionCompatActivity() {
 
     protected abstract val tag : String
     protected abstract fun getLayout(): Int
@@ -28,6 +29,13 @@ abstract class BaseActivity : AppCompatActivity() {
         setContentView(getLayout())
         setSupportActionBar(toolbar)
         Log.v(tag, "[ ON CREATE]")
+
+//        requestGpsPermissions()
+        requestPermissions(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        )
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -35,8 +43,31 @@ abstract class BaseActivity : AppCompatActivity() {
         return true
     }
 
-    companion object {
+//    private fun requestGpsPermissions(){
+//        ActivityCompat.requestPermissions(
+//            this,
+//            arrayOf(
+//                Manifest.permission.ACCESS_FINE_LOCATION,
+//                Manifest.permission.ACCESS_COARSE_LOCATION),
+//                REQUEST_GPS)
+//    }
 
+//    override fun onRequestPermissionsResult(
+//        requestCode: Int,
+//        permissions: Array<out String>,
+//        grantResults: IntArray
+//    ) {
+//        if(requestCode == REQUEST_GPS) {
+//            for(grantResult in grantResults){
+//                if (grantResult == PackageManager.PERMISSION_GRANTED) { Log.e( tag, String.format( Locale.ENGLISH, "Permission granted [ %d ]", requestCode )) }
+//                else { Log.e( tag, String.format( Locale.ENGLISH, "Permission not granted [ %d ]", requestCode ) )
+//                }
+//            }
+//        }
+//    }
+
+    companion object {
+        val REQUEST_GPS = 0
         private var fontExoBold: Typeface? = null
         private var fontExoRegular: Typeface? = null
 

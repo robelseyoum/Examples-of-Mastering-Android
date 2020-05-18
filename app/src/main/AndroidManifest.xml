@@ -3,6 +3,22 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.robelseyoum3.journaler">
 
+    <!--    We will need access to the internet, so we can later execute API calls-->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!--    Boot complete event, we will need it so the application service can do synchronization with the backend each time we reboot our phone-->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!--    Reading and writing external storage so we can read the data or store it-->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <!--    Access network state so we know if there is a connection to the internet available-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!--    Read the GPS coordinates because we want each note we create to have coordinates associated if we want to-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!--    Use vibration so we can vibrate when we received something from the backend-->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:name=".Journaler"
         android:allowBackup="false"
@@ -31,8 +47,5 @@
             android:screenOrientation="fullSensor"/>
 
     </application>
-
-
-
 
 </manifest>
