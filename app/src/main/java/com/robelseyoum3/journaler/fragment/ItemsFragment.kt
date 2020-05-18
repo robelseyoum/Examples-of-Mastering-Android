@@ -1,5 +1,7 @@
 package com.robelseyoum3.journaler.fragment
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
@@ -8,6 +10,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.BounceInterpolator
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.robelseyoum3.journaler.R
 import com.robelseyoum3.journaler.activity.NoteActivity
@@ -34,13 +38,13 @@ class ItemsFragment : BaseFragment() {
                 getString(R.string.todos),
                 getString(R.string.notes)
             )
-
+            animate(btn)
             val builder =
                 AlertDialog.Builder(this@ItemsFragment.context)
                     .setTitle(R.string.choose_a_type)
-                    .setItems(
-                        items
-                    ) { _, which ->
+                    .setCancelable(true)
+                    .setOnCancelListener { animate(btn, false) }
+                    .setItems(items) { _, which ->
                         when (which) {
                             0 -> openCreateTodo()
                             1 -> openCreateNote()
@@ -50,6 +54,55 @@ class ItemsFragment : BaseFragment() {
             builder.show()
         }
         return view
+    }
+
+    private fun animate(btn: FloatingActionButton, expand: Boolean = true) {
+        val animation1 = ObjectAnimator.ofFloat(
+            btn, "scaleX", if (expand) {
+                1.5f
+            } else {
+                1.0f
+            }
+        )
+        animation1.duration = 2000
+        animation1.interpolator = BounceInterpolator()
+
+        val animation2 = ObjectAnimator.ofFloat(
+            btn, "scaleY", if (expand) {
+                1.5f
+            } else {
+                1.0f
+            }
+        )
+        animation2.duration = 2000
+        animation2.interpolator = BounceInterpolator()
+
+        val animation3 = ObjectAnimator.ofFloat(
+            btn, "alpha", if (expand) {
+                0.3f
+            } else {
+                1.0f
+            }
+        )
+        animation2.duration = 500
+        animation2.interpolator = AccelerateInterpolator()
+
+        /**
+         * The AnimatorSet class gives us the ability to create complex animations.
+         * In this case, we defined animations for scaling along the x axis and for scaling along the y axis.
+         * This two animations will be animated at the same time giving us the effect of scaling in both directions.
+         * After we scale view we will reduce (or increase) view's capacity. As you can see, we can chain or order animation's execution.
+         */
+        val set = AnimatorSet()
+        set.play(animation1).with(animation2).before(animation3)
+        set.start()
+
+        /* btn.animate()
+            .setInterpolator(BounceInterpolator())
+            .scaleX(if (expand){1.5f} else {1.0f})
+            .scaleY(if(expand){1.5f} else {1.0f})
+            .setDuration(2000)
+            .start()*/
     }
 
 

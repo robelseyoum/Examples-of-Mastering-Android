@@ -10,7 +10,20 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <include layout="@layout/activity_header"/>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/black_transparent_40">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@android:color/darker_gray"
+                android:elevation="4dp" />
+
+        </LinearLayout>
 
         <EditText
             android:id="@+id/todo_title"
@@ -24,6 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:background="@color/grey_text_light"
             android:weightSum="1">
 
             <Button
